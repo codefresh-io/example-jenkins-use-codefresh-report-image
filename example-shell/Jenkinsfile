@@ -45,19 +45,16 @@ pipeline {
             }
             steps {
                 sh '''
-                    echo "CF_WORKFLOW_NAME=$CF_WORKFLOW_NAME"
-                    echo "CF_WORKFLOW_URL=$CF_WORKFLOW_URL"
                     # add git branch
                     export CF_GIT_PROVIDER="${CF_GIT_PROVIDER:-github}"
                     export CF_GIT_BRANCH="${GIT_BRANCH#*/}"
                     WITHOUT_POSTFIX="${GIT_URL%.*}"
                     export CF_GIT_REPO="${WITHOUT_POSTFIX#*//*/}"
-                    VERSION="latest"
                     echo "$(env)"
 
                     env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
                     echo "Provided env vars: $(cat cf_env|xargs echo)"
-                    docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:$VERSION"
+                    docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:latest"
                 '''
             }
         }
