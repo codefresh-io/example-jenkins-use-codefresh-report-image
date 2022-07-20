@@ -52,7 +52,6 @@ pipeline {
             }
             steps {
                 sh '''
-   
                     # add git branch
                     export CF_GIT_PROVIDER="${CF_GIT_PROVIDER:-github}"
                     export CF_GIT_BRANCH="${GIT_BRANCH#*/}"
