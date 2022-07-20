@@ -9,6 +9,7 @@ pipeline {
         }
         stage ('Build & Push ') {
             steps {
+                sudo su
                 echo 'Building'
                 sh 'ls -ltra'
                 script {
