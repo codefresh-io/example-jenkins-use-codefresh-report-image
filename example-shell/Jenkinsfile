@@ -50,7 +50,7 @@ pipeline {
                     export CF_GIT_BRANCH="${GIT_BRANCH#*/}"
                     WITHOUT_POSTFIX="${GIT_URL%.*}"
                     export CF_GIT_REPO="${WITHOUT_POSTFIX#*//*/}"
-                    VERSION="0.0.83"
+                    VERSION="latest"
                     echo "$(env)"
 
                     env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
