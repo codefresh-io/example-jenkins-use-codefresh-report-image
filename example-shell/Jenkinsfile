@@ -43,8 +43,8 @@ pipeline {
             }
             steps {
                 sh '''
-                    CF_WORKFLOW_NAME = "$JOB_NAME"
-                    CF_WORKFLOW_URL = "$BUILD_URL"
+                    export CF_WORKFLOW_NAME = "$JOB_NAME"
+                    export CF_WORKFLOW_URL = "$BUILD_URL"
                     echo "CF_WORKFLOW_NAME = $CF_WORKFLOW_NAME"
                     echo "CF_WORKFLOW_URL = $CF_WORKFLOW_URL"
                     # add git branch
