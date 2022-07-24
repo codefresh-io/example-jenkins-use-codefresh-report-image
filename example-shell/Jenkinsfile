@@ -12,7 +12,7 @@ pipeline {
                 IMAGE_NAME=credentials('IMAGE_NAME')
             }             
             environment {
-                CF_IMAGE="${env.IMAGE_NAME}:latest")
+                CF_IMAGE="${env.IMAGE_NAME}:latest"
             }
             steps {
                 sh 'echo "Building $CF_IMAGE"'
@@ -36,7 +36,7 @@ pipeline {
                 IMAGE_NAME=credentials('IMAGE_NAME')
             }             
             environment {
-                CF_IMAGE="${env.IMAGE_NAME}:latest")
+                CF_IMAGE="${env.IMAGE_NAME}:latest"
             }
             environment {
                 CF_HOST = credentials('CF_RT_HOST')
