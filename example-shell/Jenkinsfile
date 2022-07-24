@@ -35,10 +35,10 @@ pipeline {
                 CF_IMAGE = credentials('CF_IMAGE')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
-                CF_JIRA_MESSAGE= '''
-                        A message with embedded issue ( i.e. CR-11027 )
-                        that would be use query jira for the ticket 
-                        '''
+//                 CF_JIRA_MESSAGE= '''
+//                         A message with embedded issue ( i.e. CR-11027 )
+//                         that would be use query jira for the ticket 
+//                         '''
                 CF_JIRA_PROJECT_PREFIX = 'CR'
                 CF_GITHUB_TOKEN = credentials('CF_GITHUB_TOKEN')
                 CF_WORKFLOW_NAME="${env.JOB_NAME}"
