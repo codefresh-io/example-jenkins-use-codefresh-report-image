@@ -19,7 +19,8 @@ pipeline {
                     app = docker.build("${env.IMAGE_NAME}")
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {   
-                            app.push("latest")        
+                        app.push("${BUILD_NUMBER}")      
+                        app.push("latest")      
                     }
                 }
                 sh '''
@@ -33,14 +34,14 @@ pipeline {
             environment {
                 IMAGE_NAME=credentials('IMAGE_NAME')
                 CF_IMAGE="${env.IMAGE_NAME}:latest"
-                CF_API_KEY = credentials('CF_API_KEY')
-                CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
-                CF_JIRA_INTEGRATION= 'jira'
-                CF_JIRA_MESSAGE= '''
+                CF_API_KEY=credentials('CF_API_KEY')
+                CF_CONTAINER_REGISTRY_INTEGRATION='docker'
+                CF_JIRA_INTEGRATION='jira'
+                CF_JIRA_MESSAGE='''
                         A message with embedded issue ( i.e. CR-11027 )
                         that would be use query jira for the ticket '''
-                CF_JIRA_PROJECT_PREFIX = 'CR'
-                CF_GITHUB_TOKEN = credentials('CF_GITHUB_TOKEN')
+                CF_JIRA_PROJECT_PREFIX='CR'
+                CF_GITHUB_TOKEN=credentials('CF_GITHUB_TOKEN')
                 CF_WORKFLOW_NAME="${env.JOB_NAME}"
                 CF_WORKFLOW_URL="${env.BUILD_URL}"
             }
