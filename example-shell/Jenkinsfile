@@ -13,7 +13,7 @@ pipeline {
             }
             steps {
                 echo 'Building '
-                sh 'ls -ltr; echo ${env.CF_IMAGE}'
+                sh 'ls -ltr; echo "$CF_IMAGE"'
                 script {
                     def app
                     app = docker.build("safficodefresh/test-report-image-jenkins")
