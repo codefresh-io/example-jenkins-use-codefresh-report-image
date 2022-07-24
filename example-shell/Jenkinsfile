@@ -9,7 +9,8 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                CF_IMAGE = "safficodefresh/test-report-image-jenkins:latest"
+                CF_IMAGE = credentials('CF_IMAGE')
+                    //"safficodefresh/test-report-image-jenkins:latest"
             }
             steps {
                 echo 'Building '
