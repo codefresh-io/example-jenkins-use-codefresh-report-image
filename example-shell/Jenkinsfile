@@ -8,9 +8,12 @@ pipeline {
             }
         }
         stage ('Build & Push ') {
+            environment {
+                CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
+            }
             steps {
-                echo 'Building'
-                sh 'ls -ltra'
+                echo 'Building '
+                sh 'ls -ltr; echo ${env.CF_IMAGE}'
                 script {
                     def app
                     app = docker.build("safficodefresh/test-report-image-jenkins")
