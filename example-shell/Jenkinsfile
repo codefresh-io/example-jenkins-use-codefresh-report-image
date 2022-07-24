@@ -23,7 +23,7 @@ pipeline {
                 }
                 sh '''
                     # test we have image in repository.
-                    docker pull $CF_IMAGE:latest
+                    docker pull $CF_IMAGE
                     '''
             }
         }
