@@ -9,8 +9,7 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                IMAGE_NAME=credentials('IMAGE_NAME')
-                CF_IMAGE="${env.IMAGE_NAME}:latest"
+                CF_IMAGE=credentials('CF_IMAGE')
             }
             steps {
                 sh 'echo "Building $CF_IMAGE"'
@@ -24,15 +23,14 @@ pipeline {
                 }
                 sh '''
                     # test we have image in repository.
-                    docker pull $CF_IMAGE
+                    docker pull $CF_IMAGE:latest
                     '''
             }
         }
         
         stage('report image') {
             environment {
-                IMAGE_NAME=credentials('IMAGE_NAME')
-                CF_IMAGE="${env.IMAGE_NAME}:latest"
+                CF_IMAGE=credentials('CF_IMAGE')
                 CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
