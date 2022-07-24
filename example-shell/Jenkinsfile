@@ -33,9 +33,9 @@ pipeline {
         stage('report image') {
             environment {
                 CF_ENRICHERS = 'jira git'
-                CF_HOST = "safficodefresh/test-ld-1" //credentials('CF_RT_HOST')
+                CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
-                CF_IMAGE = credentials('CF_IMAGE_NAME')
+                CF_IMAGE = "safficodefresh/test-ld-1" //credentials('CF_IMAGE_NAME')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
                 CF_JIRA_MESSAGE= '''
