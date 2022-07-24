@@ -9,7 +9,7 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                CF_IMAGE = credentials('CF_IMAGE_NAME')
+                CF_IMAGE = 'safficodefresh/test-ld-1'
             }
             steps {
                 echo "Building ${env.CF_IMAGE_NAME} "
