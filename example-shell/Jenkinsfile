@@ -12,7 +12,7 @@ pipeline {
                 CF_IMAGE = 'safficodefresh/test-ld-1'
             }
             steps {
-                echo "Building ${env.CF_IMAGE_NAME} "
+                echo "Building $CF_IMAGE_NAME "
                 sh 'ls -ltra'
                 script {
                     def app
