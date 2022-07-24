@@ -19,12 +19,10 @@ pipeline {
                     app = docker.build("${env.CF_IMAGE}")
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {            
-                            app.push("${env.CF_IMAGE}")            
                             app.push("latest")        
                     }
                 }
                 sh '''
-                    IMAGE_NAME="safficodefresh/test-report-image-jenkins:$BUILD_NUMBER"
                     docker pull $IMAGE_NAME
                     '''
             }
