@@ -9,13 +9,13 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                IMAGE_NAME=credentials('IMAGE_NAME')
-                CF_IMAGE="${env.IMAGE_NAME}:latest"            }
+                CF_IMAGE=credentials('CF_IMAGE')
+            }
             steps {
                 sh 'echo "Building $CF_IMAGE"'
                 script {
                     def app
-                    app = docker.build("${env.IMAGE_NAME}:latest")
+                    app = docker.build("${env.CF_IMAGE}")
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {   
                             app.push("latest")        
@@ -30,8 +30,7 @@ pipeline {
         
         stage('report image') {
             environment {
-                IMAGE_NAME=credentials('IMAGE_NAME')
-                CF_IMAGE="${env.IMAGE_NAME}:latest"
+                CF_IMAGE=credentials('CF_IMAGE')
                 CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
