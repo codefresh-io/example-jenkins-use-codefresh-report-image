@@ -9,7 +9,10 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                CF_IMAGE = credentials('CF_IMAGE')
+                IMAGE_NAME=credentials('IMAGE_NAME')
+            }             
+            environment {
+                CF_IMAGE="${env.IMAGE_NAME}:latest")
             }
             steps {
                 sh 'echo "Building $CF_IMAGE"'
@@ -30,9 +33,14 @@ pipeline {
         
         stage('report image') {
             environment {
+                IMAGE_NAME=credentials('IMAGE_NAME')
+            }             
+            environment {
+                CF_IMAGE="${env.IMAGE_NAME}:latest")
+            }
+            environment {
                 CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
-                CF_IMAGE = credentials('CF_IMAGE')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
                 CF_JIRA_MESSAGE= '''
