@@ -10,8 +10,6 @@ pipeline {
         stage ('Build & Push ') {
             environment {
                 IMAGE_NAME=credentials('IMAGE_NAME')
-            }             
-            environment {
                 CF_IMAGE="${env.IMAGE_NAME}:latest"
             }
             steps {
@@ -34,8 +32,6 @@ pipeline {
         stage('report image') {
             environment {
                 IMAGE_NAME=credentials('IMAGE_NAME')
-            }             
-            environment {
                 CF_IMAGE="${env.IMAGE_NAME}:latest"
             }
             environment {
