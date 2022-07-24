@@ -34,7 +34,7 @@ pipeline {
                 CF_HOST = credentials('CF_RT_HOST')
                 // 'https://saffi.pipeline-team.cf-cd.com'
                 CF_API_KEY = credentials('CF_API_KEY')
-                CF_IMAGE = "safficodefresh/test-report-image-jenkins:latest"
+                CF_IMAGE = "${env.CF_IMAGE}"
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
                 CF_JIRA_MESSAGE= '''
