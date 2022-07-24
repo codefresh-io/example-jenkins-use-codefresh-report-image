@@ -9,7 +9,7 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                CF_IMAGE = "safficodefresh/test-report-image-jenkins"
+                CF_IMAGE = "safficodefresh/test-report-image-jenkins:latest"
             }
             steps {
                 echo 'Building '
@@ -23,7 +23,7 @@ pipeline {
                     }
                 }
                 sh '''
-                    docker pull $IMAGE_NAME
+                    docker pull $CF_IMAGE
                     '''
             }
         }
