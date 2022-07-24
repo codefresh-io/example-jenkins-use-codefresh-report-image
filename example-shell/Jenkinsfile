@@ -8,12 +8,15 @@ pipeline {
             }
         }
         stage ('Build & Push ') {
+            environment {
+                CF_IMAGE = credentials('CF_IMAGE_NAME')
+            }
             steps {
                 echo 'Building'
                 sh 'ls -ltra'
                 script {
                     def app
-                    app = docker.build("safficodefresh/test-report-image-jenkins")
+                    app = docker.build(credentials('CF_IMAGE_NAME'))
                     // require credentials to be stored under DOCKERHUB
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB') {            
                             app.push("${env.BUILD_NUMBER}")            
@@ -21,7 +24,7 @@ pipeline {
                     }
                 }
                 sh '''
-                    IMAGE_NAME="safficodefresh/test-report-image-jenkins:$BUILD_NUMBER"
+                    IMAGE_NAME="$CF_IMAGE_NAME"
                     docker pull $IMAGE_NAME
                     '''
             }
@@ -30,9 +33,9 @@ pipeline {
         stage('report image') {
             environment {
                 CF_ENRICHERS = 'jira git'
-                CF_HOST = 'https://saffi.pipeline-team.cf-cd.com'
+                CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
-                CF_IMAGE = "safficodefresh/test-report-image-jenkins:${env.BUILD_NUMBER}"
+                CF_IMAGE = credentials('CF_IMAGE_NAME')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
                 CF_JIRA_MESSAGE= '''
