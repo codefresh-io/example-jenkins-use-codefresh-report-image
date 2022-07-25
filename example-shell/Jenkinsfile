@@ -30,6 +30,7 @@ pipeline {
         
         stage('report image') {
             environment {
+                CF_CI_TYPE='jenkins'
                 CF_IMAGE=credentials('CF_IMAGE')
                 CF_HOST = credentials('CF_RT_HOST')
                 CF_API_KEY = credentials('CF_API_KEY')
