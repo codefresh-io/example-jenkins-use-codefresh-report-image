@@ -9,7 +9,7 @@ pipeline {
         }
         stage ('Build & Push ') {
             environment {
-                CF_IMAGE=credentials('CF_IMAGE')
+                CF_IMAGE= credentials('CF_IMAGE')
             }
             steps {
                 sh 'echo "Building $CF_IMAGE"'
@@ -30,29 +30,32 @@ pipeline {
         
         stage('report image') {
             environment {
-                CF_IMAGE=credentials('CF_IMAGE')
-                CF_HOST = credentials('CF_RT_HOST')
-                CF_API_KEY = credentials('CF_API_KEY')
+                CF_IMAGE= credentials('CF_IMAGE')
+                CF_HOST= credentials('CF_RT_HOST')
+                CF_API_KEY= credentials('CF_API_KEY')
                 CF_CONTAINER_REGISTRY_INTEGRATION= 'docker'
                 CF_JIRA_INTEGRATION= 'jira'
                 CF_JIRA_MESSAGE= '''
                         A message with embedded issue ( i.e. CR-11027 )
                         that would be use query jira for the ticket 
                         '''
-                CF_JIRA_PROJECT_PREFIX = 'CR'
-                CF_GITHUB_TOKEN = credentials('CF_GITHUB_TOKEN')
-                CF_WORKFLOW_NAME="${env.JOB_NAME}"
-                CF_WORKFLOW_URL="${env.BUILD_URL}"
+                CF_JIRA_PROJECT_PREFIX= 'CR'
+                CF_GITHUB_TOKEN= credentials('CF_GITHUB_TOKEN')
+                CF_WORKFLOW_NAME= "${env.JOB_NAME}"
+                CF_WORKFLOW_URL= "${env.BUILD_URL}"
             }
             steps {
                 sh '''
-                    export CF_CI_TYPE='jenkins'
+                    export CF_CI_TYPE="jenkins"
+                    # add workflow details
+                    export CF_WORKFLOW_NAME="${CF_WORKFLOW_NAME:-$JOB_NAME}"
+                    export CF_WORKFLOW_URL="${CF_WORKFLOW_URL:-$BUILD_URL}"
                     # add git branch
                     export CF_GIT_PROVIDER="${CF_GIT_PROVIDER:-github}"
                     WITHOUT_POSTFIX="${GIT_URL%.*}"
-                    export CF_GIT_REPO="${WITHOUT_POSTFIX#*//*/}"
+                    export CF_GIT_REPO="${CF_GIT_REPO:-${WITHOUT_POSTFIX#*//*/}}"
                     # slice branch name from repo/branch
-                    export CF_GIT_BRANCH="${GIT_BRANCH#*/}"
+                    export CF_GIT_BRANCH="${CF_GIT_BRANCH:-${GIT_BRANCH#*/}}"
                     env | cut -f 1 -d "=" | grep -E "^CF_"  > cf_env
                     docker run --env-file=cf_env "quay.io/codefresh/codefresh-report-image:latest"
                 '''
